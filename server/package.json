@@ -1,0 +1,22 @@
+{
+  "name": "vblog-server",
+  "version": "1.0.0",
+  "description": "server for blog",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "koa",
+    "server"
+  ],
+  "author": "superson",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.8.1",
+    "koa-cors": "0.0.16",
+    "koa-router": "^7.4.0",
+    "mysql": "^2.17.1"
+  }
+}
