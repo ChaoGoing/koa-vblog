@@ -9,29 +9,31 @@ var pool = mysql.createPool({
 })
 
 let query = function(sql, value){
-    return new Promise((resolve, reject)=>{
-        pool.getConnection((err, connection)=>{
-            if(err){
-                reject(err)
-            }else{
-                
-                connection.query(sql, value, (err, rows)=>{
-                    if(err){
-                        reject(err)
-                    }else{
-                        console.log("rows=>", rows)
-                        resolve(rows)
-                    }
-                    connection.release();
-                })
-            }
-
-
+    try{
+        return new Promise((resolve, reject)=>{
+            pool.getConnection((err, connection)=>{
+                if(err){
+                    reject(err)
+                }else{
+                    
+                    connection.query(sql, value, (err, rows)=>{
+                        if(err){
+                            reject(err)
+                        }else{
+                            console.log("rows=>", rows)
+                            resolve(rows)
+                        }
+                        connection.release();
+                    })
+                }
+    
+    
+            })
         })
-
-
-
-    })
+    }catch(e){
+        return "sql error"
+    }
+    
 }
 
 let test = function(){
@@ -53,9 +55,9 @@ let article = {
 }
 
 let common = {
-    checkLogin(account, password){
-        let _sql = `SELECT COUNT(user_name) FROM zc_users WHERE user_name = ${account} AND user_password = ${password}`;
-        return query(_sql)
+    checkLogin(name, password){
+        let _sql = `SELECT COUNT(user_name) AS count FROM zc_users WHERE user_name =? AND user_password = ?`;
+        return query(_sql, [name, password])
     },
     getToken(){
 

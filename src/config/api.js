@@ -1,5 +1,5 @@
 export default [
-    {name:'login', url:'/login'},
+    {name:'login', url:'/jLogin'},
     { name:'getArticleList', url:'/getArticleList' }
 
 ]

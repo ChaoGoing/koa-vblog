@@ -1,4 +1,6 @@
 const state = {
+    token:null,
+
     /**播放器 */
     singer:'',
     isPlaying:false,

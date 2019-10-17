@@ -27,6 +27,9 @@ const routers =  [
         path:'/manage',
         name:'manage',
         component:manage,
+        meta: {
+            auth: true
+        },
         children:[
             
             {
@@ -37,22 +40,32 @@ const routers =  [
             {
                 path:'/manageArticles',
                 name:'manageArticles',
-                component:manageArticles
+                component:manageArticles,
+                meta: {
+                    auth: true
+                },
             },
             {
                 path:'/manageLabels',
                 name:'manageLabels',
                 component:manageLabels,
+                meta: {
+                    auth: true
+                },
             },
             {
                 path:'/editorArticle',
                 name:'editorArticle',
-                component:editorArticle
+                component:editorArticle,
+                meta: {
+                    auth: true
+                },
             },
             
         ]
     }
 
 ]
+
 
 export default routers 

@@ -25,10 +25,10 @@ export default function(arr){
 			let self = this;
 			//��������ﶨ��status��status��Ӱ����������ô���Ƿ����ȫ��ֻ��ͬʱ����һ������
 			let a = this.getAxios(config).then(res =>{
-                console.log("axiosRes=>", res)
+                console.log("axiosRes=>", res.data)
                 //console.log(self)
 				self.vueThis[config.name] = res.data
-				return res
+				return res.data
 			})
 
 			return a;

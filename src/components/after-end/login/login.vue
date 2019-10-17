@@ -35,7 +35,9 @@
 </template>
 <script>
 import flexNav from '../../common/flexnav'
+import {tokenMixin} from '../../../api/mixin'
 export default {
+    mixins: [tokenMixin],
     data(){
         return{
             loginModal:true,
@@ -56,6 +58,7 @@ export default {
         }
     },
     methods:{
+        
         handleSubmit(){
             this.cAxios.login(this,{
                 params:{
@@ -64,8 +67,15 @@ export default {
                 }
             }).then((res)=>{
                 console.log(res)
+               if(!!Number(res.code)){   //code = 1 校验成功，保存token
+                    this.handleToken(res.token);
+                    this.$router.push({path:'/manage'})
+               }else{
+
+               }
             })
-        }
+        },
+        
     },
     computed:{
 

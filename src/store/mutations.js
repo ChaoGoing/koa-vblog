@@ -25,6 +25,10 @@ const mutations = {
 
     SET_CURRENT_PATH(state, path){
         state.currentPath = path;
+    },
+
+    SET_TOKEN(state, token){
+        state.token = token;
     }
 
 }
