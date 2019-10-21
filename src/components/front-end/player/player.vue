@@ -1,12 +1,19 @@
 <template>
 <div class="p-footer" id="p-footer">
     <div class="footer-in">
+            <div class="control" style="display:none">
+                <a class="control-mode" href="javascript:"></a>
+                <!-- <a class="control-fav" href="javascript:"></a>
+                <a class="control-download" href="javascript:"></a>
+                <a class="control-comment" href="javascript:"></a>
+                <a class="control-only" href="javascript:"></a> -->
+            </div>
             <span class="play">
                 <span><a  href="javascript:"></a></span>
                 <span><a class="f-play" href="javascript:"></a></span>
                 <span><a href="javascript:"></a></span>
             </span>
-            <div class="progress">
+            <div class="progress" v-if="false">
                 <div class="progress-info">
                     <span>魔鬼中的天使</span>
                     <span>-</span>
@@ -19,13 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="control">
-                <a class="control-mode" href="javascript:"></a>
-                <a class="control-fav" href="javascript:"></a>
-                <a class="control-download" href="javascript:"></a>
-                <a class="control-comment" href="javascript:"></a>
-                <a class="control-only" href="javascript:"></a>
-            </div>
+            
             <!--<div class="voice">-->
             <audio src=""></audio>
     </div>
@@ -39,15 +40,17 @@ export default {
 </script>
 <style lang="less">
     .p-footer{
+        box-shadow: 0 5px 10px #ccc;
+        background: url(../../../assets/bfq-Bg.jpg) center top no-repeat;
         width: 100%;
-        height: 45px;
+        height: 60px;
         position: absolute;
         left: 0;
         bottom: 0;
         z-index: 5;
         user-select: none;
         .footer-in{
-            width: 1200px;
+            width: 100%;
             height: 100%;
             display: flex;
             justify-content: center;
@@ -55,14 +58,14 @@ export default {
             margin:auto;
 
             .play{
-                width: 20%;
+                width: 100%;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 span{
                     width: 80px;
-                    height: 100%;
+                    // height: 100%;
                     a{
                         display: inline-block;
                         width: 22px;
@@ -82,7 +85,7 @@ export default {
                 .f-play{
                     width: 30px;
                     height: 30px;
-                    background-position: 0 0;
+                    background-position: 5px 0;
                 }
                 .f-stop{
                     background-position: -30px 0 !important;
@@ -145,7 +148,7 @@ export default {
     justify-content: space-around;
     align-items: flex-start;
     width: 28%;
-    height: 100%;
+    /* height: 100%; */
 }
 .footer-in .voice{
     display: inline-block;

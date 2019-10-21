@@ -3,7 +3,8 @@ const config = {
     USERNAME:'root',
     PASSWORD:'root',
     PORT:'3306',
-    HOST:"localhost"
+    HOST:"localhost",
+    articleTable:'zc_articles'
 }
 
 module.exports = config

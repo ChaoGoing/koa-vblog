@@ -18,58 +18,59 @@
     left: 0;
     bottom: 0;
     background: #f8fafc;
+    z-index: 90;
   }
 
-  // 大屏幕
-  &.hideSidebar {
-    .side-wrapper {
-      transform: translate(-150px, 0);
-      overflow: hidden;
-      .navbar {
-        transform: translate(150px, 0);
-        overflow: hidden;
-      }
-      .logo-box{
-        transform: translate(150px, 0);
-      }
-      &:hover {
-        transform: translate(0px, 0);
-        .navbar {
-          transform: translate(0px, 0);
-        }
-        .logo-box{
-          transform: translate(0, 0);
-        }
-      }
-    }
-    .main-wrapper {
-      padding-left: 40px;
-    }
-  }
-  // 小屏幕
-  &.hoverSideBar {
-    .side-wrapper {
-      transform: translate(-150px, 0);
-      .navbar {
-        transform: translate(150px, 0);
-      }
-      .logo-box{
-        transform: translate(150px, 0);
-      }
-      &.hover {
-        transform: translate(0px, 0);
-        .navbar {
-          transform: translate(0px, 0);
-        }
-        .logo-box{
-          transform: translate(0, 0);
-        }
-      }
-    }
-    .main-wrapper {
-      padding-left: 40px;
-    }
-  }
+  // // 大屏幕
+  // &.hideSidebar {
+  //   .side-wrapper {
+  //     transform: translate(-150px, 0);
+  //     overflow: hidden;
+  //     .navbar {
+  //       transform: translate(150px, 0);
+  //       overflow: hidden;
+  //     }
+  //     .logo-box{
+  //       transform: translate(150px, 0);
+  //     }
+  //     &:hover {
+  //       transform: translate(0px, 0);
+  //       .navbar {
+  //         transform: translate(0px, 0);
+  //       }
+  //       .logo-box{
+  //         transform: translate(0, 0);
+  //       }
+  //     }
+  //   }
+  //   .main-wrapper {
+  //     padding-left: 40px;
+  //   }
+  // }
+  // // 小屏幕
+  // &.hoverSideBar {
+  //   .side-wrapper {
+  //     transform: translate(-150px, 0);
+  //     .navbar {
+  //       transform: translate(150px, 0);
+  //     }
+  //     .logo-box{
+  //       transform: translate(150px, 0);
+  //     }
+  //     &.hover {
+  //       transform: translate(0px, 0);
+  //       .navbar {
+  //         transform: translate(0px, 0);
+  //       }
+  //       .logo-box{
+  //         transform: translate(0, 0);
+  //       }
+  //     }
+  //   }
+  //   .main-wrapper {
+  //     padding-left: 40px;
+  //   }
+  // }
 }
 
 //tHeader
@@ -155,8 +156,9 @@
   }
   .navbar {
     transition: all .28s ease-out;
+    // transition-delay: .5s;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
     position: absolute;
     top: 50px;
     left: 0;

@@ -1,6 +1,7 @@
 const bodyparser = require('koa-bodyparser');
-const router = require('koa-router')()
-const jwt = require('../util/jwt')
+const router = require('koa-router')();
+const jwt = require('../util/jwt');
+const koaBody = require('koa-body');
 
 const apiModule = require('../common/mysql')
 const articleModule = apiModule.article,
@@ -27,7 +28,7 @@ router.post('/jLogin', async (ctx)=>{
     
 })
 
-router.post('/addArticle',async (ctx)=>{
+router.post('/jAddArticle',async (ctx)=>{
     await articleModule.add().then(res=>{
         // console.log(res)
         ctx.body = res
@@ -35,14 +36,51 @@ router.post('/addArticle',async (ctx)=>{
 
 })
 
-router.post('/getArticleList',async (ctx, next)=>{
+router.post('/jGetArticleList',async (ctx, next)=>{
     await articleModule.getList().then(res=>{
         console.log(res)
-        ctx.body = res
+        ctx.body = { code:1, data:res }
     })
+})
+
+// router.post('/uploadImg',async (ctx, next)=>{
+//     console.log(ctx.request.body.files )
+//     ctx.body = {data:ctx.request.files}
+// })
+router.post('/jGetArticleInfo',async (ctx, next)=>{
+    let id = ctx.request.body.articleId, result;
+    console.log(id)
+    await articleModule.getArticleInfo(id).then(res => {
+        console.log(res)
+        if(res){
+            ctx.body = {
+                code:1,
+                data:res[0]
+            }
+        }else{
+            ctx.body = {
+                code:0,
+                data:{}
+            }
+        }
+    })
+
 
 })
 
+router.post('/jUpdateArticle', async(ctx, next)=>{
+    
+    let params = ctx.request.body;
+    // console.log(params)
+    await articleModule.update(params).then(res=>{
+        if(res.affectedRows){
+            ctx.body = {code:1, data:"ok"}
+        }else{
+            ctx.body = {code:0, data:"error"}
+        }
+        
+    })
+})
 
 function dealRowDataPacket(data){
     return JSON.parse(JSON.stringify(data));

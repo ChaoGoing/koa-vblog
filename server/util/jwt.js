@@ -19,13 +19,13 @@ let jwtUtil = {
             cert = fs.readFileSync(path.join(__dirname, '../pem/rsa_public_key.pem'));
         try{
             let result = jwt.verify(token, cert, {algorithms: ['RS256']}) || {};
-            // let result = jwt.verify(token, cert, {algorithm:['RS256']}) || {};
+            console.log(result);
             let { exp = 0 } = result, current = Math.floor(Date.now() / 1000);
             
-            return current < exp ? result.data : true;
+            return current < exp ? result.data : false;
  
         }catch(e){
-            return e
+            return false
         }
     
     

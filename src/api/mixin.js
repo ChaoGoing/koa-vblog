@@ -14,6 +14,9 @@ export const tokenMixin = {
             this.setToken(token);
             localStorage.setItem('vToken', token);
         },
+        removeToken(){
+            localStorage.removeItem('vToken')
+        }
     },
     computed:{
         ...mapGetters['token']

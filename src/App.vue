@@ -21,11 +21,4 @@ export default {
   text-align: center;
 
 }
-html, body{
-        padding:0;
-        margin:0;
-        height:100%;
-        overflow: hidden;
-        font-size:16px;
-    }
 </style>

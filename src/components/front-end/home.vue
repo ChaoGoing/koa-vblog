@@ -1,6 +1,6 @@
 <template>
     <div class="layout">
-        <Layout :style="{height: '92vh', overflow:'hidden'}">
+        <Layout :style="{height: '100vh', overflow:'hidden'}">
             <Sider width="25vw" >
                 <div style="height:250px">
 
@@ -29,9 +29,11 @@
             </Content>
         </Layout>
         <!-- 底部播放器 -->
-        <div class="footer" :style="{ 'height':'8vh', zIndex:99999, minHeight:'60px', position:'fixed', width:'100%', bottom:0, left:0, }">
+        <section :style="{width:'12vw', position:'fixed', right:0, bottom:'2vh'}">
             <player></player>
-        </div>
+        </section>
+            
+        
         <!-- 底部播放器 -->
     </div>    
 </template>
@@ -48,7 +50,7 @@ export default {
     }
 }
 </script>
-<style >
+<style scoped>
 .ivu-drawer-body{
     padding: 0 !important;
 }
@@ -91,12 +93,9 @@ export default {
         overflow: hidden;
         height:100%;
         width: 100%;
-
-
     }
     .footer{
         // background-color:rgba(79, 158, 65, .8);
-        box-shadow: 2px -2px 2px #eee;
-        background: url(../../assets/bfq-Bg.jpg) center top no-repeat;
+       
     }
 </style>

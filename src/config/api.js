@@ -1,5 +1,8 @@
 export default [
     {name:'login', url:'/jLogin'},
-    { name:'getArticleList', url:'/getArticleList' }
-
+    {name:'getArticleList', url:'/jGetArticleList' },
+    {name:'articleInfo', url:'/jGetArticleInfo'},
+    {name:'addArticle', url:'/jAddArticle'},
+    {name:'updateArticle', url:'/jUpdateArticle'},
+    {name:'deleteArticle', url:'/deleteArticle'},
 ]

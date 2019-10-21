@@ -24,6 +24,7 @@ import 'tinymce/plugins/contextmenu'
 import 'tinymce/plugins/wordcount'
 import 'tinymce/plugins/colorpicker'
 import 'tinymce/plugins/textcolor'
+import 'tinymce/plugins/codesample'
 
 
 export default {
@@ -38,21 +39,21 @@ export default {
         },
         plugins: {
             type: [String, Array],
-            default: 'lists image media table wordcount'
+            default: 'lists image media table wordcount codesample'
         },
         toolbar: {
             type: [String, Array],
-            default: 'undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat'
+            default: 'undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat | codesample'
         }
     },
     data () {
         return {
             init:{
-                language_url: '/static/tinymce/langs/zh_CN.js',
+                language_url: '/tinymce/langs/zh_CN.js',
                 language: 'zh_CN',
                 skin_url: '/static/tinymce/skins/ui/oxide',
                 // skin_url: '/tinymce/skins/ui/oxide-dark',//暗色系
-                height: 200,
+                height: 500,
                 plugins: this.plugins,
                 toolbar: this.toolbar,
                 branding: false,
@@ -75,6 +76,9 @@ export default {
     watch:{
         text(item){
            this.$emit('input', item)
+        },
+        value(v){
+            this.text = v
         }
     }
 }

@@ -46,7 +46,7 @@ export default {
                 name: '',
                 password: '',
                 remember:false,
-                },
+            },
             ruleValidate: {
                 name: [
                     {required: true, message: '姓名不能为空', trigger: 'blur'}
@@ -58,8 +58,18 @@ export default {
         }
     },
     methods:{
-        
         handleSubmit(){
+            this.$refs.formValidate.validate((valid) => {
+                if (valid) {
+                   this.summbit();
+                } else {
+                    this.$Message.error('请填写登陆信息');
+                }
+            })
+
+            
+        },
+        summbit(){
             this.cAxios.login(this,{
                 params:{
                     name:this.formValidate.name,
@@ -69,12 +79,14 @@ export default {
                 console.log(res)
                if(!!Number(res.code)){   //code = 1 校验成功，保存token
                     this.handleToken(res.token);
-                    this.$router.push({path:'/manage'})
+                    this.$nextTick(()=>{
+                        this.$router.push({path:'/manage'})
+                    })  
                }else{
 
                }
             })
-        },
+        }
         
     },
     computed:{

@@ -1,8 +1,8 @@
 export default [
     {
-      path: "/manage",
+      path: "/index",
       name: "主页",
-      icon: "icon-dynamic_fill",
+      icon: "ivu-icon-ios-home-outline",
       level: 1,
       sort: 1,
       children: [],
@@ -11,14 +11,14 @@ export default [
     {
       path: "/",
       name: "管理博客",
-      icon: "icon-createtask_fill",
+      icon: "ivu-icon-md-book",
       level: 0,
       fixed: false,
       children: [
         {
           path: "/manageArticles",
           name: "文章管理",
-          icon: "icon-dynamic_fill",
+          icon: "ivu-icon-md-book",
           level: 1,
           children: [],
           fixed: false
@@ -27,6 +27,7 @@ export default [
           path: "/manageLabels",
           name: "标签管理",
           level: 1,
+          icon:"ivu-icon-md-book",
           children: [],
           fixed: false
         },
@@ -36,7 +37,7 @@ export default [
     {
         path: "/authorInfo",
         name: "个人信息",
-        icon: "icon-dynamic_fill",
+        icon: "ivu-icon-ios-contact",
         level: 1,
         children: [],
         sort: 1,

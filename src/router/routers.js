@@ -5,7 +5,7 @@ import manage from '../components/after-end/main'
 import afterIndex from '../components/after-end/manage/index'
 import manageArticles from '../components/after-end/manage/manageArticles'
 import manageLabels from '../components/after-end/manage/manageLabels'
-import editorArticle from '@/components/after-end/manage/editorArticle'
+import editArticle from '@/components/after-end/manage/editorArticle'
 
 
 const routers =  [
@@ -31,7 +31,6 @@ const routers =  [
             auth: true
         },
         children:[
-            
             {
                 path:'/index',
                 name:'index',
@@ -54,9 +53,9 @@ const routers =  [
                 },
             },
             {
-                path:'/editorArticle',
-                name:'editorArticle',
-                component:editorArticle,
+                path:'/editArticle',
+                name:'editArticle',
+                component:editArticle,
                 meta: {
                     auth: true
                 },

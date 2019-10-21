@@ -1,10 +1,10 @@
 <template>
   <div class="header">
     <!-- 伸缩按钮 -->
-    <div class="nav-icon" @click="toggleSideBar">
-      <Icon type="navicon-round"></Icon>
-    </div>
-    <!-- 伸缩按钮 /-->
+      <div class="nav-icon" @click="toggleSideBar">
+        <Icon type="md-list"></Icon>
+      </div>
+        <!-- 伸缩按钮 /-->
 
     <!-- 消息类按钮 -->
     <div class="msg-group-box">
@@ -17,13 +17,13 @@
 
 <script>
   export default {
-    
+
     data () {
       return {screen: false}
     },
     methods: {
       toggleSideBar () {
-        
+        this.$emit("toggleClass")
       },
       
     }
