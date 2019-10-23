@@ -61,7 +61,7 @@
         
         <!-- 用户信息 -->
         <Dropdown class="userBox" slot="right">
-          
+          <a href="javascript:void(0)" @click="toFrontPage">博客主页</a>
           <a href="javascript:void(0)">
             <Icon type="md-arrow-dropdown" />
             管理员
@@ -141,6 +141,9 @@ export default {
       this.hideSidebar = !this.hideSidebar;
       this.hoverSidebar = !this.hoverSidebar;
       console.log(this.hideSidebar)
+    },
+    toFrontPage(){
+      this.$router.push('/')
     }
   },
   computed:{

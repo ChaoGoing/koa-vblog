@@ -60,16 +60,21 @@ let article = {
     },
     getList(){
         let _sql = `SELECT article_id AS articleId, article_title AS title,  article_preview AS preview, article_keyword AS keyword , DATE_FORMAT(article_date,'%Y-%m-%d %H:%i:%s') as commitDate
-        FROM zc_articles ORDER BY commitDate DESC`
+                    
+                    FROM zc_articles ORDER BY commitDate DESC`
         return query(_sql)
     },
     getArticleInfo(id){
-        let _sql = `SELECT article_title as title, article_content as content, article_keyword as keyword, 
-                    DATE_FORMAT(article_date,'%Y-%m-%d %H:%i:%s') as commitDate
-                    from zc_articles WHERE article_id = ?`
+        let _sql = `SELECT label_name AS label, article_title AS title, article_content AS content, article_keyword AS keyword, 
+                    DATE_FORMAT(article_date,'%Y-%m-%d %H:%i:%s') AS commitDate 
+                    FROM  zc_articles AS a,zc_labels AS l 
+                    WHERE article_id = ? AND a.label_id = l.label_id`
         return query(_sql, [id])
     },
-    
+    getLabels(){
+        let _sql = `SELECT label_id AS index, label_name AS name FROM zc_labels ORDER BY label_id`
+        return query(_sql)
+    }
 
 
 

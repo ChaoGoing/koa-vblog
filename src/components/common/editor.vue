@@ -43,7 +43,7 @@ export default {
         },
         toolbar: {
             type: [String, Array],
-            default: 'undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | lists image media table | removeformat | codesample'
+            default: 'undo redo |  formatselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | file image media | removeformat | codesample'
         }
     },
     data () {
@@ -60,10 +60,10 @@ export default {
                 menubar: false,
                 // 此处为图片上传处理函数，这个直接用了base64的图片形式上传图片，
                 // 如需ajax上传可参考https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_handler
-                // images_upload_handler: (blobInfo, success, failure) => {
-                //     const img = 'data:image/jpeg;base64,' + blobInfo.base64()
-                //     success(img)
-                // }
+                images_upload_handler: (blobInfo, success, failure) => {
+                    const img = 'data:image/jpeg;base64,' + blobInfo.base64()
+                    success(img)
+                }
             },
             text:this.value
         }

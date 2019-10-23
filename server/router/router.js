@@ -8,6 +8,44 @@ const articleModule = apiModule.article,
       commonModule = apiModule.common;
 
 
+//前台api
+router.post('/getArticles',async (ctx)=>{
+    await articleModule.getList().then(res=>{
+        // console.log(res)
+        ctx.body = { code:1, data:res }
+    })
+
+})
+router.post('/getArticleContent',async (ctx)=>{
+    let id = ctx.request.body.articleId;
+    await articleModule.getArticleInfo(id).then(res => {
+        console.log(res)
+        if(res){
+            ctx.body = {
+                code:1,
+                data:res[0]
+            }
+        }else{
+            ctx.body = {
+                code:0,
+                data:{}
+            }
+        }
+    })
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
 //jwt登录路由
 router.post('/jLogin', async (ctx)=>{
     let {name, pwd} = ctx.request.body;
@@ -85,5 +123,9 @@ router.post('/jUpdateArticle', async(ctx, next)=>{
 function dealRowDataPacket(data){
     return JSON.parse(JSON.stringify(data));
 }
+
+
+
+
 
 module.exports = router

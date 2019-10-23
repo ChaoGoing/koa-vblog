@@ -1,5 +1,14 @@
 
 import home from '../components/front-end/home'
+import fIndex from '../components/front-end/index/index'
+import articles from '../components/front-end/articles/articles'
+import articleInfo from '../components/front-end/articles/articleInfo'
+
+
+
+
+
+
 import afterLogin from '../components/after-end/login/login'
 import manage from '../components/after-end/main'
 import afterIndex from '../components/after-end/manage/index'
@@ -13,8 +22,38 @@ const routers =  [
     {
         path: "/",
         name: "home",
-        component:home
+        component:home,
+        children:[
+            {
+                path:'/',
+                name:'frontIndex',
+                component:fIndex
+            },
+            {
+                path:'/fIndex',
+                name:'fIndex',
+                component:fIndex,
+            },
+            {
+                path:'/articles',
+                name:'articles',
+                component:articles,
+            },
+            {
+                path:'/articleInfo',
+                name:"articleInfo",
+                component:articleInfo,
+            }
+
+        ]
     },
+
+
+
+
+
+
+
     //后台路由
     //后台登陆
     {

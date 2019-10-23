@@ -1,40 +1,40 @@
 <template>
     <div class="layout">
         <Layout :style="{height: '100vh', overflow:'hidden'}">
-            <Sider width="25vw" >
+            <Sider width="25vw" :style="{'z-index':100}" >
                 <div style="height:250px">
 
                 </div>
-                <Menu active-name="1-1" theme="light" width="18vw" >
-                    <MenuItem name="1-1" >
-                        
-                        <span>首页</span>
+                <Menu active-name="index" theme="light" width="18vw" @on-select="toPage">
+                    <MenuItem name="fIndex" >
+                            <span>首页</span>
                     </MenuItem>
-                    <MenuItem name="1-2">
-                        
-                        <span>文章</span>
+                    <MenuItem name="articles" >
+                            <span>文章</span>
                     </MenuItem>
-                    <MenuItem name="1-3">
+                    <MenuItem name="fav">
                         
                         <span>收藏</span>
                     </MenuItem>
-                    <MenuItem name="1-3">
+                    <MenuItem name="about">
                         
                         <span>关于</span>
                     </MenuItem>
                 </Menu>
             </Sider>
-            <Content :style="{padding: '24px', background: '#f5f7f9', overflow:'auto'}">
+            <Content :style="{padding: '24px', background: '#f5f7f9', overflow:'auto','z-index':0}">
+                <div style="height:100px;background-color:#ccc;width:100%;margin-bottom:10px"></div>
                 <router-view></router-view>
             </Content>
-        </Layout>
-        <!-- 底部播放器 -->
-        <section :style="{width:'12vw', position:'fixed', right:0, bottom:'2vh'}">
-            <player></player>
-        </section>
+            <!-- 底部播放器 -->
+            <section :style="{ position:'absolute', left:'18vw', bottom:'2vh','background-color':'transparent'}">
+                <player></player>
+            </section>
+                
             
+            <!-- 底部播放器 -->
+        </Layout>
         
-        <!-- 底部播放器 -->
     </div>    
 </template>
 <script>
@@ -47,6 +47,11 @@ export default {
     },
     components:{
         player,
+    },
+    methods:{
+        toPage(path){
+            this.$router.push('/'+path)
+        }
     }
 }
 </script>
@@ -73,10 +78,10 @@ export default {
     
 }
 .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title{
-    color: #c9c9c9;
+    color: #c9c9c9 !important;
 }
 .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu){
-    color: #828282;
+    color: #828282 !important;
 }
 .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu):after{
     left:0;

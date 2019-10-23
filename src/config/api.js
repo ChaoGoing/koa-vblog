@@ -5,4 +5,8 @@ export default [
     {name:'addArticle', url:'/jAddArticle'},
     {name:'updateArticle', url:'/jUpdateArticle'},
     {name:'deleteArticle', url:'/deleteArticle'},
+
+
+    {name:'articles', url:'/getArticles'},
+    {name:'articleContent', url:'/getArticleContent'}
 ]

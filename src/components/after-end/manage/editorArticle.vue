@@ -10,28 +10,29 @@
                     <FormItem label="关键词" prop="keyword">
                         <Input v-model="formValidate.keyword" placeholder=""></Input>
                     </FormItem>
-                    <FormItem label="类型" prop="type">
-                        <Select v-model="formValidate.type" placeholder="">
-                            <Option value="beijing">New York</Option>
-                            <Option value="shanghai">London</Option>
-                            <Option value="shenzhen">Sydney</Option>
+                    <FormItem label="类型" prop="label">
+                        <Select v-model="formValidate.label" placeholder="">
+                            <Option value="1">html</Option>
+                            <Option value="2">js</Option>
+                            <Option value="3">css</Option>
+                            <Option value="4">vue</Option>
                         </Select>
                     </FormItem>
-                    <FormItem label="日期">
-                        <Row>
-                            <Col span="11">
-                                <FormItem prop="date">
-                                    <DatePicker type="date" placeholder="年月日" v-model="preDate"></DatePicker>
-                                </FormItem>
-                            </Col>
-                            <Col span="2" style="text-align: center">-</Col>
-                            <Col span="11">
-                                <FormItem prop="time">
-                                    <TimePicker type="time" placeholder="时分秒" v-model="sufDate"></TimePicker>
-                                </FormItem>
-                            </Col>
-                        </Row>
-                    </FormItem>
+<FormItem label="日期">
+    <Row>
+        <Col span="11">
+            <FormItem prop="date">
+                <DatePicker type="date" placeholder="年月日" v-model="preDate"></DatePicker>
+            </FormItem>
+        </Col>
+        <Col span="2" style="text-align: center">-</Col>
+        <Col span="11">
+            <FormItem prop="time">
+                <TimePicker type="time" placeholder="时分秒" v-model="sufDate"></TimePicker>
+            </FormItem>
+        </Col>
+    </Row>
+</FormItem>
                     <!-- <FormItem label="Gender" prop="gender">
                         <RadioGroup v-model="formValidate.gender">
                             <Radio label="male">Male</Radio>
@@ -119,7 +120,7 @@ export default {
             formValidate: {
                 title: '',
                 keyword: '',
-                type: '',
+                label: '',
                 gender: '',
                 interest: [],
                 commitDate: "2019-01-01 00:00:00",
@@ -134,8 +135,8 @@ export default {
                     { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
                     
                 ],
-                type: [
-                    { required: true, message: 'Please select the city', trigger: 'change' }
+                label: [
+                    { required: true, message: 'Please select the label', trigger: 'change' }
                 ],
                 gender: [
                     { required: true, message: 'Please select gender', trigger: 'change' }
@@ -180,10 +181,17 @@ export default {
                 this.formValidate = res.data
                 this.msg = res.data.content
             })
+            
         })
             
     },
     computed:{
+        // preDate(){
+        //      return new Date(this.formValidate.commitDate)
+        // },
+        // sufDate(){
+        //     return new Date(this.formValidate.commitDate)
+        // }
         preDate:{
             get(){
                 // console.log(new Date(this.formValidate.commitDate.substr(0,10)))
@@ -227,6 +235,8 @@ export default {
                 }}).then(res=>{
                     if(res.code){
                         this.$Message.info("修改成功")
+                        
+                        this.$router.push('/manageArticles')
                     }else{
                         this.$Message.info("修改失败")
                     }
@@ -279,7 +289,7 @@ export default {
     },
     watch:{
         msg(item){
-            console.log(item)
+            // console.log(item)
         }
     }
 

@@ -1,6 +1,6 @@
 <template>
-<div class="p-footer" id="p-footer">
-    <div class="footer-in">
+<div class="p-footer" id="p-footer" :class="{longPlayer:longClass}">
+    <div class="footer-in" >
             <div class="control" style="display:none">
                 <a class="control-mode" href="javascript:"></a>
                 <!-- <a class="control-fav" href="javascript:"></a>
@@ -13,7 +13,7 @@
                 <span><a class="f-play" href="javascript:"></a></span>
                 <span><a href="javascript:"></a></span>
             </span>
-            <div class="progress" v-if="false">
+            <div class="progress" >
                 <div class="progress-info">
                     <span>魔鬼中的天使</span>
                     <span>-</span>
@@ -26,29 +26,42 @@
                     </div>
                 </div>
             </div>
-            
-            <!--<div class="voice">-->
-            <audio src=""></audio>
+            <div class="arrow-right" @click="togglePlayClass">
+                <Icon class="rotate" style="margin-left:-5px" type="md-arrow-dropright" color="#fff" :size="20"/>
+            </div>
+            <!-- <audio src=""></audio> -->
+
     </div>
 </div>
 
 </template>
 <script>
 export default {
-    
+    data(){
+        return{
+            longClass:false,
+        }
+    },
+    methods:{
+        togglePlayClass(){
+            this.longClass = !this.longClass
+        }
+    }
 }
 </script>
 <style lang="less">
     .p-footer{
         box-shadow: 0 5px 10px #ccc;
-        background: url(../../../assets/bfq-Bg.jpg) center top no-repeat;
-        width: 100%;
+        opacity: .9;
+        background: url(../../../assets/bfq-Bg.jpg) left center no-repeat;
+        width: 140px;
         height: 60px;
-        position: absolute;
+        position: relative;
         left: 0;
         bottom: 0;
-        z-index: 5;
         user-select: none;
+        border-radius: 0 5px 5px 0;
+        transition: 1.3s cubic-bezier(0.43, 0, 0.15, 1.3);
         .footer-in{
             width: 100%;
             height: 100%;
@@ -58,11 +71,12 @@ export default {
             margin:auto;
 
             .play{
-                width: 100%;
+                width: 130px;
                 height: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                padding:5px 5px 0 20px;
                 span{
                     width: 80px;
                     // height: 100%;
@@ -94,14 +108,19 @@ export default {
 
             .progress{
                 display: inline-block;
-                width: 42%;
-                height: 100%;
+                width: 0;
+                opacity: 0;
+                transition: 0.5s linear;
+                // height: 100%;
                 padding-right: 20px;
-                margin-top: -10px;
+                // height: 60px;
+                // margin-top: -10px;
+                white-space: nowrap;
                 .progress-info{
                     width: 100%;
                     height: 23px;
                     color: #ffffff;
+                    white-space: nowrap;
                     span{
                         font-size: 13px;
                         height: 30px;
@@ -116,8 +135,41 @@ export default {
                 }
                
             }
+
+            .arrow-right{
+                
+                position: absolute;
+                right:0;
+                top: 0;
+                width: 10px;
+                height: 100%;
+                line-height: 60px;
+                // margin-left: -10px;
+                border-left: 1px solid rgba(255, 255, 255, .5);
+                vertical-align: middle;
+                border-radius: 0 5px 5px 0;
+                &:hover{
+                    color: #ccc;
+                    background-color: rgba(206, 113, 37, .3)
+                }
+            }
+
+
         }
     }
+
+    .p-footer.longPlayer{
+        width: 500px !important;
+        .progress{
+            width:200px !important;
+            opacity: 1;
+        }
+        .rotate{
+            transform: rotate(180deg);
+            transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+    }
+    
 </style>
 <style>
 
