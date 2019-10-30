@@ -12,27 +12,27 @@
                     </FormItem>
                     <FormItem label="类型" prop="label">
                         <Select v-model="formValidate.label" placeholder="">
-                            <Option value="1">html</Option>
-                            <Option value="2">js</Option>
-                            <Option value="3">css</Option>
-                            <Option value="4">vue</Option>
+                            <!-- <Option value="1">html</Option> -->
+                            <!-- <template > -->
+                                <Option v-for="(label, i) in labels" :value="String(label.id)" >{{label.name}}</Option>
+                            <!-- </template> -->
                         </Select>
                     </FormItem>
-<FormItem label="日期">
-    <Row>
-        <Col span="11">
-            <FormItem prop="date">
-                <DatePicker type="date" placeholder="年月日" v-model="preDate"></DatePicker>
-            </FormItem>
-        </Col>
-        <Col span="2" style="text-align: center">-</Col>
-        <Col span="11">
-            <FormItem prop="time">
-                <TimePicker type="time" placeholder="时分秒" v-model="sufDate"></TimePicker>
-            </FormItem>
-        </Col>
-    </Row>
-</FormItem>
+                    <FormItem label="日期">
+                        <Row>
+                            <Col span="11">
+                                <FormItem prop="date">
+                                    <DatePicker type="date" placeholder="年月日" v-model="preDate"></DatePicker>
+                                </FormItem>
+                            </Col>
+                            <Col span="2" style="text-align: center">-</Col>
+                            <Col span="11">
+                                <FormItem prop="time">
+                                    <TimePicker type="time" placeholder="时分秒" v-model="sufDate"></TimePicker>
+                                </FormItem>
+                            </Col>
+                        </Row>
+                    </FormItem>
                     <!-- <FormItem label="Gender" prop="gender">
                         <RadioGroup v-model="formValidate.gender">
                             <Radio label="male">Male</Radio>
@@ -50,7 +50,7 @@
                 </Col>
             </Row>
 
-            <section>
+            <!-- <section>
                 <div class="demo-upload-list" v-for="item in uploadList">
                     <template v-if="item.status === 'finished'">
                         <img :src="item.url">
@@ -86,8 +86,8 @@
                 </Modal>
 
 
-            </section>
-
+            </section> -->
+            <uploadImg :url.sync="imgUrl"  />
             <section class="tinymce-editor">
                 <tinymce-editor ref="editor"
                     v-model="msg"
@@ -107,20 +107,24 @@
 </template>
 <script>
 import tinymceEditor from '../../common/editor'
+import uploadImg from '../../common/upload'
 export default {
 
     components:{
-        tinymceEditor
+        tinymceEditor,uploadImg
     },
     data(){
         return {
             articleId:null,
             msg:'',
+            labels:[],
+
+            imgUrl:"",
 
             formValidate: {
                 title: '',
                 keyword: '',
-                label: '',
+                label: 1,
                 gender: '',
                 interest: [],
                 commitDate: "2019-01-01 00:00:00",
@@ -136,7 +140,7 @@ export default {
                     
                 ],
                 label: [
-                    { required: true, message: 'Please select the label', trigger: 'change' }
+                    { required: false, message: 'Please select the label', trigger: 'change' }
                 ],
                 gender: [
                     { required: true, message: 'Please select gender', trigger: 'change' }
@@ -175,12 +179,13 @@ export default {
         this.$nextTick(()=>{
             // this.uploadList = this.$refs.upload.fileList;
             this.articleId = this.$route.query.articleId;
-            console.log(this.articleId)
-            this.cAxios.articleInfo(this, { params:{articleId:this.articleId} }).then(res=>{
+            // this.cAxios.articleInfo(this, { params:{articleId:this.articleId} }).then(res=>{
 
-                this.formValidate = res.data
-                this.msg = res.data.content
-            })
+            //     this.formValidate = res.data
+            //     this.msg = res.data.content
+            // })
+            
+            this.initData()
             
         })
             
@@ -214,6 +219,27 @@ export default {
 
     },
     methods:{
+        //使用async+promise.all作为异步解决方案，由于mounted不能写同步异步语句，就过程要写为三个函数着实繁琐了一点，
+        async initData(){
+            let [info, labels] = await  Promise.all([this.getInfo(), this.getLabels()]);
+            this.labels = await  labels.data;  
+            this.$nextTick(()=>{
+                info.data.label = info.data.label.toString();
+                this.formValidate = info.data;
+                // console.log(typeof Number(this.formValidate.label))
+                this.msg = info.data.content;
+            })
+            
+            
+        },
+        getInfo(){
+            return this.cAxios.articleInfo(this, { params:{articleId:this.articleId} })
+        },
+        getLabels(){
+            return this.cAxios.getLabels(this)
+            // return new Promise((resolve, reject) => { resolve("123") })
+        },
+
         handleSubmit (name) {
             this.$refs[name].validate((valid) => {
                 if (valid) {
@@ -224,23 +250,34 @@ export default {
             })
         },
         summbit(){
-                this.cAxios.updateArticle(this,
+            let p = this.getInnerText();
+            console.log(p);
+            this.cAxios.updateArticle(this,
                 {params:{
                     id:Number(this.articleId),
                     title:this.formValidate.title,
                     content:this.msg,
                     keyword:this.formValidate.keyword,
                     commitDate:this.formValidate.commitDate,
-
-                }}).then(res=>{
-                    if(res.code){
-                        this.$Message.info("修改成功")
-                        
-                        this.$router.push('/manageArticles')
-                    }else{
-                        this.$Message.info("修改失败")
-                    }
-                })
+                    label:Number(this.formValidate.label),
+                    url:this.imgUrl,
+                    preview:p,
+                }
+            }).then(res=>{
+                if(res.code){
+                    this.$Message.info("修改成功")
+                    
+                    this.$router.push('/manageArticles')
+                }else{
+                    this.$Message.info("修改失败")
+                }
+            })
+        },
+        getInnerText(){
+          let odiv = document.createElement('div');
+          odiv.innerHTML = this.msg;
+          let text = odiv.innerText;
+          return text.slice(0,50)
         },
         handleView (name) {
             this.imgName = name;
@@ -288,9 +325,13 @@ export default {
             
     },
     watch:{
-        msg(item){
-            // console.log(item)
-        }
+        // msg(item){
+        //     // this.getInnerText();
+        // },
+        // imgUrl(item){
+        //     console.log(item)
+        // }
+        
     }
 
 }

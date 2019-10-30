@@ -13,7 +13,7 @@ const state = {
     /**后台 */
     //路由
     currentPath:'',
-    
+    frontPath:'/fIndex'
     /**后台 */
 
 

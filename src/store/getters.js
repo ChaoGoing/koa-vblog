@@ -9,4 +9,5 @@ export const currentSong = (state) =>{
 
 
 export const currentPath = state => state.currentPath
+export const frontPath = state => state.frontPath
 export const token = state => state.token

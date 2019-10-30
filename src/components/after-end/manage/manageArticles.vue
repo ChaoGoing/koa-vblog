@@ -15,7 +15,7 @@
             
 
         </section>
-         <Table border :columns="columns" :data="listData" size="small"></Table>
+         <Table :style="{'min-height':'450px'}" border :columns="columns" :data="listData" size="small"></Table>
          <section class="pageFotter">
              <Page :total="dataCount"  :page-size="pageSize" @on-change="changePage" show-total/>
          </section>
@@ -93,7 +93,8 @@ export default {
         getList(){
             this.cAxios.getArticleList(this).then((res) => {
                 this.dataCount = res.data.length;
-                this.listData = res.data.length < this.pageSize? res: res.data.slice(0, this.pageSize);
+                this.listData = res.data.length < this.pageSize? res.data: res.data.slice(0, this.pageSize);
+                // console.log(this.listData)
             })
         },
         toEditPage(articleId){

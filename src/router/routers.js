@@ -3,6 +3,8 @@ import home from '../components/front-end/home'
 import fIndex from '../components/front-end/index/index'
 import articles from '../components/front-end/articles/articles'
 import articleInfo from '../components/front-end/articles/articleInfo'
+import fav from '../components/front-end/fav/fav'
+import about from '../components/front-end/about/about'
 
 
 
@@ -24,11 +26,11 @@ const routers =  [
         name: "home",
         component:home,
         children:[
-            {
-                path:'/',
-                name:'frontIndex',
-                component:fIndex
-            },
+            // {
+            //     path:'/',
+            //     name:'frontIndex',
+            //     component:fIndex
+            // },
             {
                 path:'/fIndex',
                 name:'fIndex',
@@ -43,6 +45,16 @@ const routers =  [
                 path:'/articleInfo',
                 name:"articleInfo",
                 component:articleInfo,
+            },
+            {
+                path:'/fav',
+                name:'fav',
+                component:fav
+            },
+            {
+                path:"/about",
+                name:'about',
+                component:about,
             }
 
         ]

@@ -27,9 +27,15 @@ const mutations = {
         state.currentPath = path;
     },
 
+    SET_FRONT_PATH(state, path){
+        state.frontPath = path
+    },
+
     SET_TOKEN(state, token){
         state.token = token;
-    }
+    },
+
+
 
 }
 
