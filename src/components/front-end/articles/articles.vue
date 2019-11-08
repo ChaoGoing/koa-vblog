@@ -22,7 +22,7 @@
                     </li>
                 </template>
                 <template slot="extra">
-                    <img src="http://127.0.0.1:1029/img1.jpg" style="height:100px;">
+                    <img :src="item.url" style="height:100px;">
                 </template>
             </ListItem>
         </List>

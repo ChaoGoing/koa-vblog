@@ -27,7 +27,7 @@
                         
                         <span>关于</span>
                     </MenuItem>
-                    <MenuItem name="/about">
+                    <MenuItem name="/manage">
                         
                         <span>后台管理</span>
                     </MenuItem>

@@ -1,5 +1,5 @@
 <template>
-    <uploadImg />
+    <uploadImg : />
 </template>
 <script>
 import uploadImg from '../../common/upload'

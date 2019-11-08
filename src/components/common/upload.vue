@@ -2,7 +2,7 @@
     <div class="upload">
 
         <div class="upload-preview" v-if="previewShow">
-            <img width="50px;" :src=previewData.url alt="">
+            <img width="50px;" :src="previewData.url || url" alt="">
             <!--进度条-->
             <div class="upload-progress" v-if="progressShow">
                 <div class="upload-progress-inner" ref="progress" ></div>
@@ -89,6 +89,9 @@ export default {
             }
             upload();
             document.forms[0].target="rfFrame";
+        },
+        mounted(){
+            console.log("parentUrl", this.url)
         }
     }
 }

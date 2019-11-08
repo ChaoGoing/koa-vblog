@@ -17,6 +17,7 @@ import afterIndex from '../components/after-end/manage/index'
 import manageArticles from '../components/after-end/manage/manageArticles'
 import manageLabels from '../components/after-end/manage/manageLabels'
 import editArticle from '@/components/after-end/manage/editorArticle'
+import addArticle from '@/components/after-end/manage/addArticle'
 
 
 const routers =  [
@@ -26,11 +27,11 @@ const routers =  [
         name: "home",
         component:home,
         children:[
-            // {
-            //     path:'/',
-            //     name:'frontIndex',
-            //     component:fIndex
-            // },
+            {
+                path:'/',
+                name:'frontIndex',
+                component:fIndex
+            },
             {
                 path:'/fIndex',
                 name:'fIndex',
@@ -111,6 +112,14 @@ const routers =  [
                     auth: true
                 },
             },
+            {
+                path:'/addArticle',
+                name:'addArticle',
+                component:addArticle,
+                meta: {
+                    auth: true
+                },
+            }
             
         ]
     }

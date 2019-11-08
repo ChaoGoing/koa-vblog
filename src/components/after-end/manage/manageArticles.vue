@@ -8,7 +8,7 @@
                 </Col>
                 <Col>
                     <Button type="primary" style="margin-left:5px">刷新</Button>
-                    <Button type="primary" style="margin-left:5px">添加</Button>
+                    <Button type="primary" style="margin-left:5px" @click="toAddPage">添加</Button>
                 </Col>
                 
             </Row>
@@ -118,6 +118,13 @@ export default {
             let _start = (index - 1) * this.pageSize,
                 _end = index  * this.pageSize;
             this.listData = this.getArticleList.data.slice(_start, _end)
+        },
+
+        toAddPage(){
+            this.$router.push({
+                path:'/addArticle',
+                // query:""     这里偷懒，后台user_id默认为1,反正没其他人用吧哈哈哈
+            })
         }
     },
     mounted(){

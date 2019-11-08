@@ -115,7 +115,7 @@ export default {
     },
     data(){
         return {
-            articleId:null,
+            articleId:1,
             msg:'',
             labels:[],
 
@@ -177,26 +177,12 @@ export default {
     },
     mounted () {
         this.$nextTick(()=>{
-            // this.uploadList = this.$refs.upload.fileList;
-            this.articleId = this.$route.query.articleId;
-            // this.cAxios.articleInfo(this, { params:{articleId:this.articleId} }).then(res=>{
-
-            //     this.formValidate = res.data
-            //     this.msg = res.data.content
-            // })
-            
-            this.initData()
-            
+            this.getLabels();
         })
             
     },
     computed:{
-        // preDate(){
-        //      return new Date(this.formValidate.commitDate)
-        // },
-        // sufDate(){
-        //     return new Date(this.formValidate.commitDate)
-        // }
+
         preDate:{
             get(){
                 // console.log(new Date(this.formValidate.commitDate.substr(0,10)))
@@ -219,29 +205,12 @@ export default {
 
     },
     methods:{
-        //使用async+promise.all作为异步解决方案，由于mounted不能写同步异步语句，就过程要写为三个函数着实繁琐了一点，
-        async initData(){
-            let [info, labels] = await  Promise.all([this.getInfo(), this.getLabels()]);
-            this.labels = await  labels.data;  
-            this.$nextTick(()=>{
-                info.data.label = info.data.label.toString();
-                this.formValidate = info.data;
-                // console.log(typeof Number(this.formValidate.label))
-                this.msg = info.data.content;
-                this.imgUrl = info.data.imgUrl;
-                console.log(this.imgUrl)
-            })
+        async getLabels(){
+            let labels = await this.cAxios.getLabels(this);
             
-            
-        },
-        getInfo(){
-            return this.cAxios.articleInfo(this, { params:{articleId:this.articleId} })
-        },
-        getLabels(){
-            return this.cAxios.getLabels(this)
+            this.labels = labels.data;
             // return new Promise((resolve, reject) => { resolve("123") })
         },
-
         handleSubmit (name) {
             this.$refs[name].validate((valid) => {
                 if (valid) {
@@ -253,8 +222,17 @@ export default {
         },
         summbit(){
             let p = this.getInnerText();
-            console.log(p);
-            this.cAxios.updateArticle(this,
+            console.log({
+                    id:Number(this.articleId),
+                    title:this.formValidate.title,
+                    content:this.msg,
+                    keyword:this.formValidate.keyword,
+                    commitDate:this.formValidate.commitDate,
+                    label:Number(this.formValidate.label),
+                    url:this.imgUrl,
+                    preview:p,
+                });
+            this.cAxios.addArticle(this,
                 {params:{
                     id:Number(this.articleId),
                     title:this.formValidate.title,
@@ -267,11 +245,11 @@ export default {
                 }
             }).then(res=>{
                 if(res.code){
-                    this.$Message.info("修改成功")
+                    this.$Message.info("添加成功")
                     
                     this.$router.push('/manageArticles')
                 }else{
-                    this.$Message.info("修改失败")
+                    this.$Message.info("添加失败")
                 }
             })
         },
@@ -281,58 +259,11 @@ export default {
           let text = odiv.innerText;
           return text.slice(0,50) + '...'
         },
-        handleView (name) {
-            this.imgName = name;
-            this.visible = true;
-        },
-        handleRemove (file) {
-            const fileList = this.$refs.upload.fileList;
-            this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-        },
-        handleSuccess (res, file) {
-            file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-            file.name = '7eb99afb9d5f317c912f08b5212fd69a';
-        },
-        handleFormatError (file) {
-            this.$Notice.warning({
-                title: 'The file format is incorrect',
-                desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
-            });
-        },
-        handleMaxSize (file) {
-            this.$Notice.warning({
-                title: 'Exceeding file size limit',
-                desc: 'File  ' + file.name + ' is too large, no more than 2M.'
-            });
-        },
-        handleBeforeUpload (file) {
 
-            let keyID = Math.random().toString().substr(2);
-            console.log("before", file)
-            const check = this.uploadList.length < 2;
-            if (!check) {
-                this.$Notice.warning({
-                    title: '最多上传一张图片'
-                });
-            }
-            return check;
-        },
-        postResult(res, file, list){
-
-            console.log(res)
-            // console.log(file)
-            // console.log(list)
-
-        }
             
     },
     watch:{
-        // msg(item){
-        //     // this.getInnerText();
-        // },
-        // imgUrl(item){
-        //     console.log(item)
-        // }
+
         
     }
 
