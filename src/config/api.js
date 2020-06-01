@@ -1,4 +1,5 @@
 export default [
+    //after-end
     {name:'login', url:'/jLogin'},
     {name:'getArticleList', url:'/jGetArticleList' },
     {name:'articleInfo', url:'/jGetArticleInfo'},
@@ -7,8 +8,9 @@ export default [
     {name:'deleteArticle', url:'/jDeleteArticle'},
     {name:'getLabels', url:'/jGetLabels'},
 
-
+    //front-end
     {name:'articles', url:'/getArticles'},
     {name:'articleContent', url:'/getArticleContent'},
+    {name:'indexImgData', url:'/getIndexImgData'},
     
 ]

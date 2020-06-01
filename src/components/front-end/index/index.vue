@@ -1,7 +1,9 @@
 <template>
-    <div class="index">
+    <div class="index" ref="index">
         <template v-for="item in waterfallList"> 
-            <imgCard :style="{width:waterfallImgWidth + 'px',position:'absolute', left:item.left + 'px', top:item.top +'px'}" :imgUrl="item.url"></imgCard>
+            <imgCard :style="{width:waterfallImgWidth + waterfallImgPadding + 'px',position:'absolute', left:item.left + 'px', top:item.top +'px'}" 
+                     :itemData = "item"
+            ></imgCard>
         </template>
         
     </div>
@@ -16,21 +18,14 @@ import imgCard from '../../common/imgCard'
         data() {
             return {
                 //mydata: null,
-                listData:[
-                    { url:"/api/character/character1.jpg", title:"", content:"", goodNum:0, },
-                    { url:"/api/character/character2.jpg", title:"", content:"", goodNum:0, },
-                    { url:"/api/character/character3.jpg", title:"", content:"", goodNum:0, },
-                    { url:"/api/character/character4.jpg", title:"", content:"", goodNum:0, },
-                ],
-
-
-                
-                waterfallImgWidth:250,//每一列的宽度
+                listData:[],
+                waterfallImgPadding:20,
+                waterfallImgWidth:230,//每一列的宽度
                 waterfallImgCol:4,//多少列
-                waterfallImgRight:15,//右边距
+                waterfallImgRight:40,//右边距
                 waterfallImgBottom:10,//下边距
                 waterfallDeviationHeight:[],//存放瀑布流各个列的高度
-                otherHeight:111,
+                otherHeight:140,
                 waterfallList:[ //存放计算好的数据
                     // { url:"/api/character/character1.jpg", left:0, top:0 },
                     // { url:"/api/character/character2.jpg", left:245, top:0 },
@@ -41,51 +36,59 @@ import imgCard from '../../common/imgCard'
         },
         methods: {
             initWaterFall(){
-
                 this.waterfallDeviationHeight = new Array(this.waterfallImgCol).fill(0);
-                console.log(this.waterfallDeviationHeight)
+                // console.log(this.waterfallDeviationHeight)
                 this.preLoadImg();
             },
-            preLoadImg(){
+            async preLoadImg(){
                 let d = this.listData, _self = this;
                 for(let i = 0; i < d.length; i++){
                     let aImg = new Image();
                     aImg.src = d[i].url;
-                    
-                    aImg.onload = aImg.onerror = function(e){
-                        let imgData = {}
-                        imgData.url = d[i].url;
-                        
-                        imgData.height = parseInt(_self.waterfallImgWidth/aImg.width * aImg.height);
-                        // console.log("imgData=>",imgData.height)
-                        _self.rankImg(imgData)
-                    }
+                    await new Promise((resolve, reject)=>{
+                        aImg.onload = aImg.onerror = function(e){
+                            let imgData = Object.assign({}, _self.listData[i])
+                            imgData.url = d[i].url;
+                            imgData.height = parseInt(_self.waterfallImgWidth/aImg.width * aImg.height);
+                            // console.log("imgData=>",_self.waterfallImgWidth,aImg.width,aImg.height,imgData.height)
+                            _self.rankImg(imgData)
+                            resolve();
+                        }
+                    })
                 }
             },
             rankImg(imgData){
                 let minIndex = this.getMinIndex();
+                // console.log(this.waterfallDeviationHeight[minIndex])
                 imgData.left = (this.waterfallImgRight+this.waterfallImgWidth)*minIndex;
                 imgData.top = this.waterfallDeviationHeight[minIndex] + this.waterfallImgBottom;
-                this.waterfallDeviationHeight[minIndex] += this.waterfallImgBottom + imgData.height +this.otherHeight ;
+                //处理图片最大高度
+                if(imgData.height > 300 ) imgData.height = 300;
+                this.waterfallDeviationHeight[minIndex] += this.waterfallImgBottom + imgData.height + this.otherHeight;
+                
                 this.waterfallList.push(imgData);
             },
             getMinIndex(){
                 const min = Math.min(...this.waterfallDeviationHeight)
                 return this.waterfallDeviationHeight.findIndex((item)=>item == min);
+            },
+            calculWaterfallImgCol(){
+                // console.log(this.$refs.index.clientWidth)
+                this.waterfallImgCol = parseInt(this.$refs.index.clientWidth / this.waterfallImgWidth)
             }
         },
         computed: {
 
         },
         mounted() {
-            this.initWaterFall();
-            this.$nextTick(() => {
-                console.log(this.mydata);
-                this.cAxios.login(this, { method: "post", params: { name: "achao" } }).then(() => {
-                    console.log("finish")
-                    console.log(this.login);
+            this.cAxios.indexImgData(this).then((res)=>{
+                this.calculWaterfallImgCol()
+                this.listData = res.data;
+                this.$nextTick(() => {
+                    this.initWaterFall();
                 })
-            })
+            });
+            
         }
 
 
@@ -96,5 +99,7 @@ import imgCard from '../../common/imgCard'
 <style lang="less">
   .index{
       position: relative;
+    //   overflow: scroll;
+    height: 100%;
   }
  </style>

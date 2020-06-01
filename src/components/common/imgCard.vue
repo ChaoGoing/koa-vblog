@@ -1,20 +1,25 @@
 <template>
     <div class="imgCard">
-        <img :src="imgUrl"  alt="">
-        <p class="title">#生而为魔</p>
-        <p class="content">#生而为魔</p>
-        <span>
-            <Icon :size="16" type="ios-thumbs-up-outline" />0
-        </span>
+        <img :src="itemData.url"  alt="">
+        <p class="title">#{{itemData.title}}</p>
+        <p class="content">{{itemData.content}}</p>
+        <p class="date">
+            <Icon type="md-copy" :size="16" />{{itemData.createDate}}
+        </p>
     </div>
 </template>
 <script>
 export default {
     props:{
-        imgUrl:{
-            type:String,
-            default:"/api/character/character1.jpg"
-        },
+        itemData:{
+            type:Object,
+            default:{
+                title:"无题",
+                content:"无解",
+                url:"",
+                createDate:'不详'
+            }
+        }
 
 
 
@@ -30,6 +35,11 @@ export default {
     computed:{
 
     },
+    mounted(){
+        this.$nextTick(()=>{
+            console.log(this.itemData)
+        })
+    }
 }
 </script>
 <style lang="less" scoped>
@@ -46,13 +56,25 @@ export default {
             color:#555;
         }
         .content{
-            height:50px;
+            // height:50px;
+            
+            overflow: hidden;
+            text-indent: 10px;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+
+        }
+        .date{
+            margin-top: 10px;
         }
         img{
             width: 100%;
             max-height: 300px;
             object-fit: cover;
             object-position: center top;
+            
         }
     }
 

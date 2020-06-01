@@ -16,6 +16,14 @@ export default [
       fixed: false,
       children: [
         {
+          path: "/manageIndexImg",
+          name: "首页管理",
+          level: 1,
+          icon:"ivu-icon-md-book",
+          children: [],
+          fixed: false
+        },
+        {
           path: "/manageArticles",
           name: "文章管理",
           icon: "ivu-icon-md-book",
@@ -31,6 +39,7 @@ export default [
           children: [],
           fixed: false
         },
+        
 
       ]
     },

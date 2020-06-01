@@ -1,8 +1,8 @@
 <template>
-    <uploadImg />
+    <uploadImg  />
 </template>
 <script>
-import uploadImg from '../../common/upload'
+import uploadImg from '../../../common/upload'
 export default {
     components:{
         uploadImg,

@@ -20,7 +20,7 @@ export default function(arr){
 		sendAxios(config){
 			let self = this;
 			let a = this.getAxios(config).then(res =>{
-                console.log("axiosRes=>", res.data)
+                // console.log("axiosRes=>", res.data)
                 //console.log(self)
 				self.vueThis[config.name] = res.data
 				return res.data

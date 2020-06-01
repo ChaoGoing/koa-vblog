@@ -50,7 +50,7 @@ export default {
             this.cAxios.articles(this).then((res)=>{
                 this.dataCount = res.data.length;
                 this.articleList = res.data.length < this.pageSize? res.data: res.data.slice(0, this.pageSize);
-                console.log(this.articleList)
+                // console.log(this.articleList)
             })
         },
         changePage(index){
@@ -59,7 +59,7 @@ export default {
             this.articleList = this.articles.data.slice(_start, _end)
         },
         toInfoPage(articleId){
-            console.log(articleId)
+            // console.log(articleId)
             this.$router.push({
                 path:'/articleInfo',
                 query:{
