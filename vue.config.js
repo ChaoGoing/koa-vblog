@@ -1,39 +1,50 @@
-module.exports = {
+const fs = require("fs");
+const path = require("path");
 
-    devServer: {
-        host: "localhost",
-        port: "8080",
-        proxy: {
-            '/api': {
-                target: " http://127.0.0.1:1029",
-                changeOrigin: "true",
-                ws: true,
-                pathRewrite: {
-                    '^/api':''
-                }
-            }
-        },
-        disableHostCheck: true
-    },
-
-    // css: {
-    //     loaderOptions: {
-    //         postcss: {
-    //             plugins: [
-    //                 require('postcss-plugin-px2rem')({
-    //                     rootValue:75,      // 新版本的是这个值
-    //                     mediaQuery: false, //（布尔值）允许在媒体查询中转换px。
-    //                     minPixelValue: 3 //设置要替换的最小像素值(3px会被转rem)。 默认 0
-    //                 }),
-    //             ]
-    //         }
-    //     }
-    // },
-    css: {
-        loaderOptions: { // 向 CSS 相关的 loader 传递选项
-          less: {
-            javascriptEnabled: true
-          }
-        }
-      }
+function resolvePath(dir) {
+  return path.join(__dirname, dir);
 }
+
+module.exports = {
+  devServer: {
+    host: "localhost",
+    port: "8080",
+    proxy: {
+      "/api": {
+        target: " http://127.0.0.1:1029",
+        changeOrigin: "true",
+        ws: true,
+        pathRewrite: {
+          "^/api": "",
+        },
+      },
+    },
+    disableHostCheck: true,
+  },
+  productionSourceMap: false, // 生产环境是否生成 sourceMap 文件
+  css: {
+    extract: true,
+    sourceMap: false,
+    loaderOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
+      sass: {
+        data: fs.readFileSync("src/assets/css/variable.scss", "utf-8"),
+      },
+    },
+    modules: false,
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        'assets': resolvePath("src/assets"),
+        'views': resolvePath("src/views"),
+        'api': resolvePath("src/api"),
+        'utils': resolvePath("src/utils"),
+        'vux': resolvePath("src/store"),
+        'config': resolvePath("src/config")
+      },
+    },
+  },
+};

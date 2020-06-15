@@ -1,8 +1,5 @@
-import frontRouters from './front/index'
-import afterRouters from './back/index'
-const routers =  [
-    ...frontRouters,
-    ...afterRouters,
-]
+import frontRouters from "./front/index";
+import afterRouters from "./back/index";
+const routers = [...frontRouters, ...afterRouters];
 
-export default routers 
+export default routers;
